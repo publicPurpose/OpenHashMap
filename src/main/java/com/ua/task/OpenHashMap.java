@@ -3,15 +3,17 @@ package com.ua.task;
 import java.util.Arrays;
 
 public class OpenHashMap {
-    int FREE = Integer.MIN_VALUE;
-    int size;
-    int[] keys;
-    long[] values;
+    private int FREE = Integer.MIN_VALUE;
+    private int initSize;
+    private int[] keys;
+    private long[] values;
+    private int count;
 
-    public OpenHashMap(int size) {
-        this.size = size + 1;
-        keys = new int[this.size];
-        values = new long[this.size];
+    public OpenHashMap(int initSize) {
+        this.initSize = initSize + 1;
+        keys = new int[this.initSize];
+        values = new long[this.initSize];
+        this.count = 0;
         Arrays.fill(keys, FREE);
     }
 
@@ -22,6 +24,7 @@ public class OpenHashMap {
                 keys[i] = x;
             if (keys[i] == x) {
                 values[i] = y;
+                count ++;
                 return;
             }
         }
@@ -30,15 +33,15 @@ public class OpenHashMap {
     // getValue value
     long getValue(int x) {
         for (int i = index(hash(x)); ; i++) {
-            if (i == size) i = 0;
+            if (i == initSize) i = 0;
             if (keys[i] == FREE) throw new RuntimeException("no such key presented");
             if (keys[i] == x) return values[i];
         }
-
     }
 
+    // returns number of element put in our hasMap
     int size() {
-        return size;
+        return count;
     }
 
     private int hash(int x) {
@@ -46,7 +49,7 @@ public class OpenHashMap {
     }
 
     private int index(int hash) {
-        return Math.abs(hash) % size;
+        return Math.abs(hash) % initSize;
     }
 
     @Override

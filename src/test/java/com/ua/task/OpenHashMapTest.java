@@ -49,7 +49,7 @@ public class OpenHashMapTest {
 
     @Test
     public void size() throws Exception {
-        assertEquals(2, openHashMap.size());
+        assertEquals(1, openHashMap.size());
     }
 
 }
