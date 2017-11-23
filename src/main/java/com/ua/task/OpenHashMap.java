@@ -9,7 +9,7 @@ public class OpenHashMap {
     long[] values;
 
     public OpenHashMap(int size) {
-        this.size = Math.max(3 * size / 2, size) + 1;
+        this.size = size + 1;
         keys = new int[this.size];
         values = new long[this.size];
         Arrays.fill(keys, FREE);
@@ -31,8 +31,8 @@ public class OpenHashMap {
     long getValue(int x) {
         for (int i = index(hash(x)); ; i++) {
             if (i == size) i = 0;
-            if(keys[i] == FREE) throw new RuntimeException("no such key presented");
-            if (keys[i] == x) return values [i];
+            if (keys[i] == FREE) throw new RuntimeException("no such key presented");
+            if (keys[i] == x) return values[i];
         }
 
     }
